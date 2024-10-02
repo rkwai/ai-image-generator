@@ -19,7 +19,7 @@ export default {
 		};
 
 		try {
-			// Generate the image using the Flux model
+			// Generate the image using the stable diffusion xl model
 			const response = await env.AI.run('@cf/stabilityai/stable-diffusion-xl-base-1.0', inputs);
 
 			// The response is a ReadableStream, so we can return it directly
