@@ -13,6 +13,10 @@ export default {
 			return new Response('Missing prompt in query parameters', { status: 400 });
 		}
 
+		if (isNaN(num_steps) || num_steps < 1 || num_steps > 20) {
+			return new Response('Invalid num_steps parameter. Must be between 1 and 50.', { status: 400 });
+		}
+
 		const inputs = {
 			prompt: prompt,
 			num_steps: num_steps
@@ -26,11 +30,17 @@ export default {
 			return new Response(response, {
 				headers: {
 					'Content-Type': 'image/png',
+					'Access-Control-Allow-Origin': '*',
+					'Access-Control-Allow-Methods': 'GET, OPTIONS',
+					'Access-Control-Allow-Headers': 'Content-Type',
 				},
 			});
 		} catch (error) {
 			console.error('Error generating image:', error);
-			return new Response('Error generating image', { status: 500 });
+			if (error instanceof Error) {
+				return new Response(`Error generating image: ${error.message}`, { status: 500 });
+			}
+			return new Response('Unknown error generating image', { status: 500 });
 		}
 	},
 } satisfies ExportedHandler<Env>;
