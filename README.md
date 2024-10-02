@@ -1,5 +1,3 @@
-# datasaa-workers
-
-## image-generator
+# ai-image-generator
 Generate images using stable diffusion xl, a state-of-the-art image generation model.
 
